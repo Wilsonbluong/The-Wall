@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>CodingDojo Wall</h1>
+            <p>Welcome {{ request.session.first_name }}</p>
+            <a href="/logout">Log Out</a></P>
+        </div>
+
+        <!-- LEAVING A MESSAGE -->
+        <div class="post">
+            <form action="/post_message" method="POST">
+            {% csrf_token %}
+                <label for="post_message">Post a Message</label>
+                <textarea name="post_message" rows="5" cols="100"></textarea>
+                <button type="submit">Post a message</button>
+            </form>
+        </div>
+
+        <!-- THE WALL -->
+        <div class="the_wall">
+
+            <!-- USER MESSAGES -->
+            {% for message in messages reversed %}
+            <div class="user_message">
+                <h4>{{ message.user.first_name }} {{ message.user.last_name }} -- {{ message.created_at }}</h4>
+                <p>Message: {{ message.message }}</p>
+            </div>
+            
+            <!-- USER COMMENTS -->
+            <div class="user_comments">
+                {% for comment in message.comments.all %}
+                    <h4>{{ comment.user.first_name }} {{ comment.user.last_name }} -- {{ comment.created_at }}</h4>
+                    <p id="comments">Comment: {{ comment.comment }}</p>
+                {% endfor %}
+            </div>
+                
+            <!-- LEAVING A COMMENT -->
+            <div class="user_comment">
+                <form action="/post_comment/{{ message.id }}" method="POST">
+                {% csrf_token %}
+                    <!-- <label for="post_comment">Post a comment</label> -->
+                    <!-- <input type="hidden" value={{comment.id}} name="message_id"> -->
+                    <textarea name="post_comment" rows="4" cols="100" placeholder="Post a comment"></textarea>
+                    <button type="submit">Post a comment</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

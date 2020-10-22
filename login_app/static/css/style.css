@@ -1,0 +1,21 @@
+* {
+    padding: 0;
+    margin: 0;
+    /* border: 1px solid red; */
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+label,
+textarea {
+    display: block;
+}
+
+#comments {
+    color: gray;
+    text-indent: 25px;
+} 

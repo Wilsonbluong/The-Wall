@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <h1>Registration</h1>
+        {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="POST" action="/register">
+        {% csrf_token %}
+            <p><label for="first_name">First Name</label>
+                <input type="text" name="first_name"></p>
+
+            <p><label for="last_name">Last Name</label>
+                <input type="text" name="last_name"></p>
+
+            <p><label for="email">Email</label>
+                <input type="reg_email" name="email"></p>
+
+            <p><label for="password">Password</label>
+                <input type="text" name="password"></p>
+
+            <p><label for="password_confirm">Confirm PW</label>
+                <input type="text" name="password_confirm"></p>
+            
+                <button type="submit">Register</button>
+        </form>
+
+        <h1>Login</h1>
+        {% if messages %}
+        <ul class="messages">    
+            {% for message in messages %}    
+                <li {% if 'login' in message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="POST" action="/login">
+        {% csrf_token %}
+            <p><label for="email">Email</label>
+                <input type="email" name="email"></p>
+
+            <p><label for="password">Password</label>
+                <input type="text" name="password"></p>
+
+            <button type="submit">Log In</button>
+        </form>
+    </body>
+</html>
